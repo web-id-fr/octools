@@ -1,0 +1,31 @@
+{
+    "name": "webid/octools",
+    "authors": [
+        {
+            "name": "Team",
+            "email": "team@web-id.fr"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^9.0 | ^10.0",
+        "laravel/nova": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webid\\Octools\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webid\\Octools\\OctoolsServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ]
+}
