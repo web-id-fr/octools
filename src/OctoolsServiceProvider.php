@@ -47,8 +47,6 @@ class OctoolsServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->registerRoutes();
-        $this->registerViews();
         $this->registerTranslations();
 
         $this->overrideNovaConfigurations();
@@ -62,23 +60,11 @@ class OctoolsServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerRoutes(): void
-    {
-        Route::group([], function () {
-            $this->loadRoutesFrom(__DIR__ . '/routes/auth.php');
-        });
-    }
-
     protected function registerFacade(): void
     {
         $this->app->singleton('octools', function () {
             return $this->app->make(Octools::class);
         });
-    }
-
-    protected function registerViews(): void
-    {
-        $this->loadViewsFrom(__DIR__ . '/Resources/views', 'octools');
     }
 
     protected function registerTranslations(): void
@@ -97,8 +83,11 @@ class OctoolsServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $this->publishes([
-            __DIR__.'/../resources/css' => $this->app->publicPath('vendor/octools'),
             __DIR__.'/../resources/img/Octools_logo_text.svg' => $this->app->publicPath('vendor/octools/Octools_logo_text.svg'),
+        ], 'public');
+
+        $this->publishes([
+            __DIR__.'/../resources/img/Octools_logo.svg' => $this->app->publicPath('vendor/octools/Octools_logo.svg'),
         ], 'public');
 
         $this->publishes([
