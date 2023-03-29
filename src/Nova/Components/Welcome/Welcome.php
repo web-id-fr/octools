@@ -22,4 +22,12 @@ class Welcome extends Card
     {
         return 'welcome';
     }
+
+    public function meta()
+    {
+        return [
+            'title' => __('octools::dashboard.welcome_title'),
+            'description' => __('octools::dashboard.welcome_description'),
+        ];
+    }
 }
