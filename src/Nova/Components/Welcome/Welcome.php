@@ -26,8 +26,8 @@ class Welcome extends Card
     public function meta()
     {
         return [
-            'title' => __('octools::resources.welcomeTitle'),
-            'description' => __('octools::resources.welcomeDescription'),
+            'title' => __('octools::resources.welcome_title'),
+            'description' => __('octools::resources.welcome_description'),
         ];
     }
 }

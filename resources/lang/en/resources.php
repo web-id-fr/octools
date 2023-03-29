@@ -10,6 +10,6 @@ return [
     'users' => 'Users',
     'workspaces' => 'Workspaces',
     'services' => 'Services',
-    'welcomeTitle' => 'Welcome on Octools BETA !',
-    'welcomeDescription' => 'You are on Octools BETA. If you come accross troubles, you can contact us by email (hello@web-id.fr).',
+    'welcome_title' => 'Welcome on Octools BETA !',
+    'welcome_description' => 'You are on Octools BETA. If you come accross troubles, you can contact us by email (hello@web-id.fr).',
 ];
