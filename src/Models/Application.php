@@ -7,6 +7,7 @@ namespace Webid\Octools\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Webid\Octools\OctoolsService;
 
 /**
  * @property string $name
@@ -36,8 +37,8 @@ class Application extends Model
         return $this->belongsTo(config('octools.models.workspace'));
     }
 
-    public function getWorkspaceServiceByName(string $serviceName): ?WorkspaceService
+    public function getWorkspaceService(OctoolsService $octoolsService): ?WorkspaceService
     {
-        return $this->workspace->services->first(fn (WorkspaceService $service ) => $service->service === $serviceName);
+        return $this->workspace->services->first(fn (WorkspaceService $service ) => $service->service === $octoolsService->name);
     }
 }

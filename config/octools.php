@@ -27,13 +27,32 @@ return [
         'workspace_service' => \Webid\Octools\Models\WorkspaceService::class,
     ],
 
-    'routing' => [
+    /*
+    |--------------------------------------------------------------------------
+    | API routes group
+    |--------------------------------------------------------------------------
+    |
+    | Here you can define route groups default configurations for octools API
+    |
+    */
+
+    'api_routes_group' => [
         'prefix' => 'api',
 
-        'middlewares' => [
+        'middleware' => [
+            'api',
             'auth:api',
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Nova configurations
+    |--------------------------------------------------------------------------
+    |
+    | Here you can define specific Laravel Nova configurations or overrides
+    |
+    */
 
     'nova' => [
         'dashboard_class' => Main::class,

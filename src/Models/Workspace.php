@@ -16,12 +16,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $name
  * @property int $organization_id
  * @property Model $organization
- * @property Collection<Model> $members
- * @property Collection<Model> $applications
- * @property Collection<Model> $services
- * @property Model|null $github
- * @property Model|null $gryzzly
- * @property Model|null $slack
+ * @property Collection<int, Member> $members
+ * @property Collection<int, Application> $applications
+ * @property Collection<int, WorkspaceService> $services
  */
 class Workspace extends Model
 {
@@ -55,20 +52,5 @@ class Workspace extends Model
     public function services(): HasMany
     {
         return $this->hasMany(config('octools.models.workspace_service'));
-    }
-
-    public function github(): HasOne
-    {
-        return $this->hasOne(config('octools.models.workspace_service'))->where('service', '=', 'github');
-    }
-
-    public function slack(): HasOne
-    {
-        return $this->hasOne(config('octools.models.workspace_service'))->where('service', '=', 'slack');
-    }
-
-    public function gryzzly(): HasOne
-    {
-        return $this->hasOne(config('octools.models.workspace_service'))->where('service', '=', 'gryzzly');
     }
 }

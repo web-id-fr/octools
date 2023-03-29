@@ -43,7 +43,7 @@ class MemberServicesFields extends Field
         $data = [];
 
         foreach (Octools::getServices() as $service) {
-            $data[$service->name] = $resource->{$service->name}?->config;
+            $data[$service->name] = $resource->services->firstWhere('service', $service->name)?->config;
         }
 
         $this->value = $data;
@@ -65,7 +65,6 @@ class MemberServicesFields extends Field
         }
 
         $response = json_decode($request[$requestAttribute], true);
-
 
         foreach ($response as $serviceName => $data) {
             $configKey = Octools::getServiceByKey($serviceName)->memberKey;
