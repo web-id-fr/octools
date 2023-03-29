@@ -22,4 +22,12 @@ class Welcome extends Card
     {
         return 'welcome';
     }
+
+    public function meta()
+    {
+        return [
+            'title' => __('octools::resources.welcomeTitle'),
+            'description' => __('octools::resources.welcomeDescription'),
+        ];
+    }
 }

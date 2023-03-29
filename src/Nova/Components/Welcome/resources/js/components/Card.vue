@@ -1,9 +1,9 @@
 <template>
   <Card class="flex flex-col items-center justify-center">
     <div class="px-3 py-3">
-      <h1 class="text-center text-3xl text-gray-500 font-light">Bienvenue sur Octools BETA !</h1>
+      <h1 class="text-center text-3xl text-gray-500 font-light">{{ this.card.title }}</h1>
       <p class="text-center text-gray-500 text-sm">
-        Vous êtes sur la version BETA d'Octools, si vous rencontrez des problèmes, merci de nous contacter par e-mail (hello@web-id.fr).
+        {{ this.card.description}}
       </p>
     </div>
   </Card>
