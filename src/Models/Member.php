@@ -18,12 +18,10 @@ use Webid\Octools\OctoolsService;
  * @property string $email
  * @property string $firstname
  * @property string $lastname
- * @property Carbon $birthdate
+ * @property Carbon|null $birthdate
  * @property int $workspace_id
  * @property Model $workspace
- * @property Collection<Model> $services
- * @property ?Model $gryzzly
- * @property ?Model $slack
+ * @property Collection<int, MemberService> $services
  */
 class Member extends Model
 {
@@ -61,41 +59,21 @@ class Member extends Model
         return $this->hasMany(config('octools.models.member_service'));
     }
 
-    public function slack(): HasOne
-    {
-        return $this->hasOne(config('octools.models.member_service'))->where('service', '=', 'slack');
-    }
-
-    public function gryzzly(): HasOne
-    {
-        return $this->hasOne(config('octools.models.member_service'))->where('service', '=', 'gryzzly');
-    }
-
-    public function getGryzzlyUUID(): ?string
-    {
-        return $this->gryzzly?->config['uuid'] ?? null;
-    }
-
-    public function getSlackUsername(): ?string
-    {
-        return $this->slack?->config['slack_member_id'] ?? null;
-    }
-
     public function fullname(): string
     {
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public function scopeHavingServiceMemberKeyMatching(Builder $builder, string $service, string $memberKey, array $matches): void
+    public function scopeHavingServiceMemberKeyMatching(Builder $builder, OctoolsService $service, array $matches): void
     {
         $builder->whereHas('services', fn ($query) => $query
-            ->where('service', $service)
-            ->whereIn("config->{$memberKey}", $matches)
+            ->where('service', $service->name)
+            ->whereIn("config->{$service->memberKey}", $matches)
         );
     }
 
-    public function getServiceMemberIdentity(string $service, string $key): mixed
+    public function getUsernameForService(OctoolsService $service): mixed
     {
-        return $this->services->firstWhere('service', $service)?->config[$key] ?? null;
+        return $this->services->firstWhere('service', $service->name)?->config[$service->memberKey] ?? null;
     }
 }

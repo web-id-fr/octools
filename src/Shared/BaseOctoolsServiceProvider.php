@@ -10,26 +10,14 @@ use Webid\Octools\OctoolsService;
 
 abstract class BaseOctoolsServiceProvider extends ServiceProvider
 {
-    /**
-     * Register service name
-     *
-     * @return string
-     */
-    abstract protected function serviceName(): string;
+    protected OctoolsService $service;
 
     /**
-     * Register the key name identifying an user in the service
+     * Register service
      *
-     * @return string
+     * @return OctoolsService
      */
-    abstract protected function memberKey(): string;
-
-    /**
-     * Register the service credentials keys
-     *
-     * @var array<string>
-     */
-    abstract protected function connectionConfigKeys(): array;
+    abstract protected function service(): OctoolsService;
 
     /**
      * Register service provider path in order to auto-generate configs
@@ -40,18 +28,16 @@ abstract class BaseOctoolsServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->registerConfigs();
+        $this->service = $this->service();
 
-        $this->app->singleton("octools_{$this->serviceName()}", fn () => OctoolsService::make(
-            $this->serviceName(),
-            $this->memberKey(),
-            $this->connectionConfigKeys(),
-        ));
+        $this->registerConfigs();
     }
 
     public function boot(): void
     {
-        Octools::register($this->app->make("octools_{$this->serviceName()}"));
+        Octools::register($this->service);
+
+        $this->registerRoutes();
 
         if ($this->app->runningInConsole()) {
             $this->registerPublishables();
@@ -61,15 +47,22 @@ abstract class BaseOctoolsServiceProvider extends ServiceProvider
     protected function registerConfigs(): void
     {
         $this->mergeConfigFrom(
-            "{$this->serviceProviderPath()}/../config/octools-{$this->serviceName()}.php",
-            "octools-{$this->serviceName()}",
+            "{$this->serviceProviderPath()}/../config/octools-{$this->service->name}.php",
+            "octools-{$this->service->name}",
         );
     }
 
     protected function registerPublishables(): void
     {
         $this->publishes([
-            "{$this->serviceProviderPath()}/../config/octools-{$this->serviceName()}.php" => $this->app->configPath("octools-{$this->serviceName()}.php"),
+            "{$this->serviceProviderPath()}/../config/octools-{$this->service->name}.php" => $this->app->configPath("octools-{$this->service->name}.php"),
         ], 'config');
+    }
+
+    private function registerRoutes(): void
+    {
+        if (file_exists($path = $this->serviceProviderPath() . '/Routes/api.php')) {
+            $this->loadRoutesFrom($path);
+        }
     }
 }

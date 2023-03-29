@@ -10,7 +10,7 @@ use Webid\Octools\OctoolsService;
 
 /**
  * @method static Collection<int, OctoolsService> getServices()
- * @method static OctoolsService getServiceByKey(OctoolsService $serviceName)
+ * @method static OctoolsService getServiceByKey(string $serviceName)
  *
  * @method static void register(OctoolsService $name)
  *

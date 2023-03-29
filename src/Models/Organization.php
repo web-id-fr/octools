@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * @property int $id
  * @property string $name
- * @property Collection<Model> $workspaces
+ * @property Collection<int, Workspace> $workspaces
  * @property Collection<Model> $users
  */
 class Organization extends Model

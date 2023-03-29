@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $member_id
  * @property string $service
  * @property array $config
- * @property Model $member
+ * @property Member $member
  */
 class MemberService extends Model
 {
