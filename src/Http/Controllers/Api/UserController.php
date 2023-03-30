@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webid\Octools\Http\Controllers\Api;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
+use Webid\Octools\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Webid\Octools\Http\Requests\Api\StoreUserRequest;

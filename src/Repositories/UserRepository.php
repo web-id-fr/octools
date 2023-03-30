@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Repositories;
+declare(strict_types=1);
+
+namespace Webid\Octools\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
