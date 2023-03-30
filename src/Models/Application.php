@@ -39,6 +39,6 @@ class Application extends Model
 
     public function getWorkspaceService(OctoolsService $octoolsService): ?WorkspaceService
     {
-        return $this->workspace->services->first(fn (WorkspaceService $service ) => $service->service === $octoolsService->name);
+        return $this->workspace->services->first(fn (WorkspaceService $service) => $service->service === $octoolsService->name);
     }
 }

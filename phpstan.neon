@@ -1,0 +1,14 @@
+parameters:
+    paths:
+        - src
+
+    level: max
+
+    ignoreErrors:
+    #    - '#Cannot call method gatherData\(\) on mixed.#'
+    #    - '#Cannot call method getBag\(\) on mixed.#'
+        - '#Class App\\Models\\User not found.#'
+        - '#(unknown class|invalid type|invalid return type) App\\Models\\User.#'
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
