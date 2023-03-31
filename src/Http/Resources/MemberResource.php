@@ -31,7 +31,7 @@ class MemberResource extends JsonResource
                 $this->resource->relationLoaded('services') && $this->resource->relationLoaded('workspace'),
                 function () {
                     return $this->resource->services
-                        ->keyBy(fn(MemberService $memberService) => $memberService->service)
+                        ->keyBy(fn (MemberService $memberService) => $memberService->service)
                         ->map(function (MemberService $memberService) {
                             $octoolsService = Octools::getServiceByKey($memberService->service);
 
