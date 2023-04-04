@@ -28,7 +28,7 @@ class MemberServicesFields extends Field
         $finish = [];
 
         foreach (Octools::getServices() as $service) {
-            $finish[$service->name] = [$service->memberKey];
+            $finish[$service->name] = $service->memberKey;
         }
 
         return $this->withMeta(['services' => $finish]);
@@ -43,7 +43,7 @@ class MemberServicesFields extends Field
         $data = [];
 
         foreach (Octools::getServices() as $service) {
-            $data[$service->name] = $resource->services->firstWhere('service', $service->name)?->config;
+            $data[$service->name] = $resource->services->firstWhere('service', $service->name)?->identifier;
         }
 
         $this->value = $data;
@@ -67,12 +67,6 @@ class MemberServicesFields extends Field
         $response = json_decode($request[$requestAttribute], true);
 
         foreach ($response as $serviceName => $data) {
-            $configKey = Octools::getServiceByKey($serviceName)->memberKey;
-
-            $data = Arr::only($data, $configKey);
-            if (empty($data[$configKey] ?? null)) {
-                $data = [];
-            }
 
             /** @var class-string<Model> $memberServiceModel */
             $memberServiceModel = config('octools.models.member_service');
@@ -86,7 +80,7 @@ class MemberServicesFields extends Field
                             'service' => $serviceName,
                         ],
                         [
-                            'config' => $data,
+                            'identifier' => $data,
                         ]
                     ),
                     fn ($query) => $query->where(

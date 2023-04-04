@@ -33,9 +33,7 @@ class MemberResource extends JsonResource
                     return $this->resource->services
                         ->keyBy(fn (MemberService $memberService) => $memberService->service)
                         ->map(function (MemberService $memberService) {
-                            $octoolsService = Octools::getServiceByKey($memberService->service);
-
-                            return $memberService->config[$octoolsService->memberKey] ?? null;
+                            return $memberService->identifier ?? null;
                         })
                         ->filter()
                         ->toArray();
