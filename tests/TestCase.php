@@ -4,13 +4,14 @@ namespace Tests;
 
 use CreateOctoolsTable;
 use Dotenv\Dotenv;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Tests\Setup\Migrations\CreateUsersTable;
+use Tests\Setup\Models\User;
 use Webid\Octools\Models\Application;
 use Webid\Octools\OctoolsServiceProvider;
-use Webid\Octools\Shared\BaseOctoolsServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -23,9 +24,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     public function setUp(): void
     {
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Tests\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        parent::setUp();
+        $this->withFactories(__DIR__ . '/Setup/Factories');
     }
 
     protected function getPackageProviders($app)
@@ -57,10 +57,15 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'options' => [],
         ]);
 
+        config()->set('octools.models.user', User::class);
+
         $this->dropTables();
 
+        include_once __DIR__ . '/Setup/Migrations/create_users_tables.php';
         include_once __DIR__ . '/../database/migrations/create_octools_tables.php';
-        (new \CreateOctoolsTable())->up();
+
+        (new CreateUsersTable())->up();
+        (new CreateOctoolsTable())->up();
     }
 
     private function dropTables(): void

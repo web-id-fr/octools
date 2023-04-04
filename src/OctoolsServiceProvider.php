@@ -72,6 +72,8 @@ class OctoolsServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): void
     {
+        Route::model('user', config('octools.models.user'));
+
         Route::group(config('octools.api_routes_group'), function () {
             $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
         });
@@ -84,7 +86,7 @@ class OctoolsServiceProvider extends ServiceProvider
 
     protected function registerPolicies(): void
     {
-        Gate::policy(\App\Models\User::class, \Webid\Octools\Policies\UserPolicy::class);
+        Gate::policy(config('octools.models.user'), \Webid\Octools\Policies\UserPolicy::class);
         Gate::policy(\Webid\Octools\Models\Member::class, \Webid\Octools\Policies\MemberPolicy::class);
         Gate::policy(\Webid\Octools\Models\Workspace::class, \Webid\Octools\Policies\WorkspacePolicy::class);
         Gate::policy(\Webid\Octools\Models\Application::class, \Webid\Octools\Policies\ApplicationPolicy::class);

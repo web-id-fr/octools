@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Factories;
+namespace Tests\Setup\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Webid\Octools\Facades\Octools;

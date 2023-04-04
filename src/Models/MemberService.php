@@ -16,8 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class MemberService extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     /**

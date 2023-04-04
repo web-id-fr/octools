@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Webid\Octools\Models;
 
-use App\ApiServices\GitHub\Entities\GithubCredentials;
-use App\ApiServices\GitHub\Exceptions\GithubIsNotConfigured;
-use App\ApiServices\Gryzzly\Entities\GryzzlyCredentials;
-use App\ApiServices\Gryzzly\Exceptions\GryzzlyIsNotConfigured;
-use App\ApiServices\Slack\Entities\SlackCredentials;
-use App\ApiServices\Slack\Exceptions\SlackIsNotConfigured;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,8 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class WorkspaceService extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     /**

@@ -2,25 +2,31 @@
 
 namespace Tests\Feature\Application;
 
-use Tests\Factories\ApplicationFactory;
-use Webid\Octools\Models\Application;
+use Tests\Helpers\ApplicationCreator;
+use Tests\Setup\Factories\ApplicationFactory;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertJson;
 
 class ApplicationEndpointsTest extends TestCase
 {
+    use ApplicationCreator;
     /**
      * @test
      */
     public function can_call_application_show_endpoint()
     {
-        $app = ApplicationFactory::factoryForModel(Application::class)->create();
+        $app = $this->createOctoolsApplication();
 
         $this->actingAsApplication($app)->get(route('applications.show', $app))
         ->assertStatus(200)
-        ->assertJson([
-            'name' => $app->name,
-            'token' => $app->token,
-        ]);
+        ->assertJson(
+            [
+                'data' => [
+                    'name' => $app->name,
+                    'token' => $app->token,
+                ],
+            ]
+        );
     }
 
     /**
@@ -28,9 +34,9 @@ class ApplicationEndpointsTest extends TestCase
      */
     public function can_call_application_update_endpoint()
     {
-        $app = Application::factory()->create([
-            'name' => 'Luigi',
-        ]);
+        $app = $this->createOctoolsApplication(
+            ['name' => 'Luigi']
+        );
 
         $this->actingAsApplication($app)
             ->put(

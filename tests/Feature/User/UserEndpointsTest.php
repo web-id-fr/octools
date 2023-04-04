@@ -2,25 +2,34 @@
 
 namespace Tests\Feature\User;
 
+use Tests\Helpers\ApplicationCreator;
+use Tests\Helpers\OrganizationCreator;
+use Tests\Helpers\UserCreator;
+use Tests\Helpers\WorkspaceCreator;
 use Webid\Octools\Models\Application;
 use Webid\Octools\Models\Organization;
-use App\Models\User;
 use Webid\Octools\Models\Workspace;
 use Tests\TestCase;
 
 class UserEndpointsTest extends TestCase
 {
+    use ApplicationCreator, WorkspaceCreator, UserCreator, OrganizationCreator;
     /**
      * @test
      */
     public function can_call_user_index_endpoint()
     {
-        $organization = Organization::factory()->create();
-        $workspace = Workspace::factory()->create([
+        $organization = $this->createOctoolsOrganization();
+        $workspace = $this->createOctoolsWorkspace([
             'organization_id' => $organization->getKey(),
         ]);
-        $app = Application::factory()->for($workspace, 'workspace')->create();
-        User::factory()->count(4)->for($organization, 'organization')->create();
+        $app = $this->createOctoolsApplication(['workspace_id' => $workspace->getKey()]);
+
+        for ($i = 0; $i <= 3; $i++) {
+            $this->createOctoolsUser([
+                'organization_id' => $organization->getKey()
+            ]);
+        }
 
         $this->assertDatabaseCount('users', 4);
 
@@ -33,17 +42,27 @@ class UserEndpointsTest extends TestCase
      */
     public function can_call_user_show_endpoint()
     {
-        $organization = Organization::factory()->create();
-        $user = User::factory()->for($organization, 'organization')->create();
-        $workspace = Workspace::factory()->for($organization, 'organization')->create();
-        $app = Application::factory()->for($workspace, 'workspace')->create();
-
-        $this->actingAsApplication($app)->get(route('users.show', $user))
-        ->assertStatus(200)
-        ->assertJson([
-            'email' => $user->email,
-            'name' => $user->name,
-            'isAdmin' => $user->isAdmin,
+        $organization = $this->createOctoolsOrganization();
+        $user = $this->createOctoolsUser([
+            'organization_id' => $organization->getKey()
         ]);
+        $workspace = $this->createOctoolsWorkspace([
+            'organization_id' => $organization->getKey()
+        ]);
+        $app = $this->createOctoolsApplication([
+            'workspace_id' => $workspace->getKey()
+        ]);
+
+        $this->actingAsApplication($app)->get(route('users.show', $user->getKey()))
+            ->assertSuccessful()
+            ->assertJson(
+                [
+                    'data' => [
+                        'email' => $user->email,
+                        'name' => $user->name,
+                        'isAdmin' => $user->isAdmin,
+                    ],
+                ]
+            );
     }
 }

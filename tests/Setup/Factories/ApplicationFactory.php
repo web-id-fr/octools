@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Factories;
+namespace Tests\Setup\Factories;
 
-use Webid\Octools\Models\Application;
-use Webid\Octools\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Webid\Octools\Models\Application;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<Application>
@@ -26,7 +25,7 @@ class ApplicationFactory extends Factory
             'name' => $this->faker->name(),
             'token' => $token,
             'api_token' => hash('sha256', $token),
-            'workspace_id' => Workspace::factory(),
+            'workspace_id' => WorkspaceFactory::new()->create(),
         ];
     }
 }

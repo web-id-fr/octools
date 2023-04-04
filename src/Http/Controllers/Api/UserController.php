@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webid\Octools\Http\Controllers\Api;
 
-use App\Models\User;
 use Webid\Octools\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -36,12 +35,12 @@ class UserController
         ], 200);
     }
 
-    public function show(User $user): UserResource
+    public function show($user): UserResource
     {
         return UserResource::make($user->load('organization'));
     }
 
-    public function update(UpdateUserRequest $request, User $user): JsonResponse
+    public function update(UpdateUserRequest $request, $user): JsonResponse
     {
         /** @var array $data */
         $data = $request->validated();
@@ -52,7 +51,7 @@ class UserController
         ], 200);
     }
 
-    public function destroy(User $user): JsonResponse
+    public function destroy($user): JsonResponse
     {
         $this->userRepository->deleteUser($user);
         return response()->json([

@@ -2,26 +2,31 @@
 
 namespace Tests\Feature\Workspace;
 
-use Webid\Octools\Models\Application;
-use Webid\Octools\Models\Workspace;
+use Tests\Helpers\ApplicationCreator;
+use Tests\Helpers\WorkspaceCreator;
 use Tests\TestCase;
 
 class WorkspaceEndpointsTest extends TestCase
 {
+    use ApplicationCreator, WorkspaceCreator;
     /**
      * @test
      */
     public function can_call_workspace_show_endpoint()
     {
-        $workspace = Workspace::factory()->create();
-        $app = Application::factory()->for($workspace, 'workspace')->create();
+        $workspace = $this->createOctoolsWorkspace();
+        $app = $this->createOctoolsApplication(['workspace_id' => $workspace->getKey()]);
 
         $this->actingAsApplication($app)
         ->get(route('workspaces.show'))
         ->assertStatus(200)
-        ->assertJson([
-                "id" => $workspace->getKey(),
-                "name" => $workspace->name,
-        ]);
+        ->assertJson(
+            [
+                'data' => [
+                    'id' => $app->workspace->getKey(),
+                    'name' => $app->workspace->name,
+                ],
+            ]
+        );
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Factories;
+namespace Tests\Setup\Factories;
 
-use Webid\Octools\Models\Organization;
-use App\Models\User;
+use Tests\Setup\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -30,7 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make("password"),
             'remember_token' => Str::random(10),
-            'organization_id' => Organization::factory(),
+            'organization_id' => OrganizationFactory::new()->create(),
         ];
     }
 }

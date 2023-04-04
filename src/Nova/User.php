@@ -6,6 +6,7 @@ namespace Webid\Octools\Nova;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
@@ -60,6 +61,8 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            BelongsTo::make(__('octools::resources.organization'), 'organization', Organization::class),
         ];
     }
 

@@ -22,8 +22,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Workspace extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Factories;
+namespace Tests\Setup\Factories;
 
 use App\Models\Enums\Services;
-use Webid\Octools\Facades\Octools;
-use Webid\Octools\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Webid\Octools\Facades\Octools;
+use Webid\Octools\Models\Workspace;
 use Webid\Octools\Models\WorkspaceService;
 use Webid\Octools\OctoolsService;
 

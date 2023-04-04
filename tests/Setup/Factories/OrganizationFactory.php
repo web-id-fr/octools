@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Factories;
+namespace Tests\Setup\Factories;
 
-use Webid\Octools\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Webid\Octools\Models\Workspace;
+use Webid\Octools\Models\Organization;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<Workspace>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<Organization>
  */
-class WorkspaceFactory extends Factory
+class OrganizationFactory extends Factory
 {
+    protected $model = Organization::class;
     /**
      * Define the model's default state.
      *
@@ -20,7 +20,6 @@ class WorkspaceFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'organization_id' => Organization::factory(),
         ];
     }
 }
