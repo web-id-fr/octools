@@ -2,3 +2,7 @@
 .idea/
 vendor/
 composer.lock
+.phpunit.result.cache
+.env
+.phpunit.cache
+phpunit.xml.bak
