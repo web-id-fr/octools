@@ -1,64 +1,37 @@
 # 🐙🤖 Octools
 
-Octools est un package PHP qui permet de self-hosted [Octools.io](https://octools.io). Il est également possible de prendre un abonnement sur [Octools.io](https://octools.io).
-Ce package vous permet d'installer le back-office qui permet la gestion des utilisateurs, équipes, applications.
+Octools is a PHP package that enables self-hosted [Octools.io](https://octools.io). It is also possible to take out a subscription on [Octools.io](https://octools.io).
+This package allows you to install the back-office which allows the management of users, teams, applications.
+
+## Requirements
+
+- PHP >= 8.1
+- Laravel >= 10.0
+- Laravel Nova >= 4.0
 
 ## Installation
 
-Pour installer le projet self-hosted, suivez les étapes suivantes :
-
-1. Créez un nouveau projet Laravel en utilisant la commande suivante :
-    
-    ```bash
-    composer create-project laravel/laravel example-app
-    ```
-   
-2. Installez Laravel Nova en ajoutant les lignes suivantes dans le composer.json :
-    
-    ```json
-    "repositories": [
-      {
-        "type": "composer",
-        "url": "https://nova.laravel.com"
-      }
-   ],
-    ```
-   
-    ```json
-   "require": {
-      "php": "^8.0",
-      "laravel/framework": "^9.0",
-      "laravel/nova": "~4.0"
-   },
-    ```
-   
-    ```bash
-    composer update --prefer-dist
-    ```
-   
-    ```php
-    php artisan nova:install
-    ```
-
-2. Ajoutez le package Octools en utilisant la commande suivante :
+1. With Composer :
     
     ```bash
     composer require webid/octools
     ```
    
-3. Publiez les fichiers de configuration en utilisant la commande suivante :
+2. After installation, you must publish the necessary assets using the following command :
     
     ```php
     php artisan vendor:publish --provider="Webid\Octools\OctoolsServiceProvider"
     ```
    
-4. Lancez les migrations en utilisant la commande suivante :
+3. Now, you need to run the migrations :
     
     ```php
     php artisan migrate
     ```
    
-5. Création de votre organisation et de votre premier utilisateur :
+## First steps
+
+1. You can easily create your first organization and user by running the following command :
     
     ```php
     php artisan organization:create
@@ -68,8 +41,8 @@ Pour installer le projet self-hosted, suivez les étapes suivantes :
     php artisan user:create
     ```
    
-6. Enfin, ajoutez le trait HasOrganization à votre modèle User :
-
+2. Finally, add HasOrganization trait to your User model :
+    
     ```php
     use WebId\Octools\Traits\HasOrganization;
     
@@ -78,27 +51,41 @@ Pour installer le projet self-hosted, suivez les étapes suivantes :
         use HasOrganization;
     }
     ```
-   
-7. Vous pouvez maintenant vous connecter à votre back-office à l'adresse suivante : https://your-domain.com/nova
 
+## Configuration
 
-## Utilisation de l'API
+You can configure the package, like the reference for your models in app/octools.php.
+    
+```php
+    'models' => [
+        'user' => App\Models\User::class,
+        'member' => \Webid\Octools\Models\Member::class,
+        'application' => \Webid\Octools\Models\Application::class,
+        'member_service' => \Webid\Octools\Models\MemberService::class,
+        'organization' => \Webid\Octools\Models\Organization::class,
+        'workspace' => \Webid\Octools\Models\Workspace::class,
+        'workspace_service' => \Webid\Octools\Models\WorkspaceService::class,
+    ],
+```
 
-Vous pouves dès à présent utiliser l'API pour gérer vos utilisateurs, équipes et applications. Vous pouvez vous référer à la documentation de l'API sur [Octools.io](https://app.octools.io/api/docs).
+You can also edit the brand and menu sidebar of the back-office.
 
-Les routes de l'API ont besoin d'un token d'authentification. Vous pouvez générer un token en vous connectant à votre back-office et en allant dans le menu "Application". Vous pouvez ensuite créer une nouvelle application et un token lui sera rattaché.
-C'est avec celui-ci que l'on s'authentifie sur l'API.
+## API Usage
+
+You can now use the API to manage your users, teams and applications. You can refer to the API documentation at [Octools.io](https://app.octools.io/api/docs).
+API routes require an authentication token. You can generate a token by logging into your back office and going to the "Application" menu. You can then create a new application and a token will be attached to it.
+It is with this that we authenticate on the API.
 
 ```sh
 curl -X GET \
 https://your-domain.com/api/users \
--H 'Authorization: Bearer VOTRE_APP_TOKEN_ICI' \
+-H 'Authorization: Bearer YOU_APP_TOKEN' \
 -H 'Content-Type: application/json'
 ```
 
-## Installation des services
+## Services installation
 
-Enfin, vous pouvez installer les services que vous souhaitez utiliser. Pour cela, vous devez vous rendre sur la documentation de chaque service et suivre les instructions d'installation.
+Finally, you can install the services you want to use. To do this, you must go to the documentation for each service and follow the installation instructions.
 
 - [Slack](https://github.com/web-id-fr/octools-connectors)
 - [Github](https://github.com/web-id-fr/octools-connectors)
