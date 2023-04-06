@@ -37,9 +37,32 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
+        $this->loadEnv();
+        $this->configDatabase();
+        $this->configModels();
+        $this->dropTables();
+        $this->createTables();
+    }
+
+    private function dropTables(): void
+    {
+        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
+        $tables = DB::select('SHOW TABLES');
+        foreach ($tables as $table) {
+            Schema::drop($table->Tables_in_octools_test);
+        }
+        DB::statement("SET FOREIGN_KEY_CHECKS = 1");
+    }
+
+
+    private function loadEnv()
+    {
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
         $dotenv->load();
+    }
 
+    private function configDatabase()
+    {
         config()->set('database.default', 'mysql');
         config()->set('database.connections.mysql', [
             'driver' => 'mysql',
@@ -56,26 +79,18 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'engine' => null,
             'options' => [],
         ]);
-
-        config()->set('octools.models.user', User::class);
-
-        $this->dropTables();
-
+    }
+    public function createTables()
+    {
         include_once __DIR__ . '/Setup/Migrations/create_users_tables.php';
         include_once __DIR__ . '/../database/migrations/create_octools_tables.php';
-
         (new CreateUsersTable())->up();
         (new CreateOctoolsTable())->up();
     }
 
-    private function dropTables(): void
+    private function configModels()
     {
-        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
-        $tables = DB::select('SHOW TABLES');
-        foreach ($tables as $table) {
-            Schema::drop($table->Tables_in_octools_test);
-        }
-        DB::statement("SET FOREIGN_KEY_CHECKS = 1");
+        config()->set('octools.models.user', User::class);
     }
 }
 

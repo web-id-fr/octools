@@ -22,7 +22,7 @@ class MemberServiceFactory extends Factory
         return [
             'member_id' => Member::factory(),
             'service' => Octools::getServiceByKey('github')->name,
-            'config' => "{'username':'CLEMREP'}",
+            'config' => "{'username':'JohnDoe'}",
         ];
     }
 }

@@ -14,37 +14,35 @@ class MemberEndpointsTest extends TestCase
     use MemberCreator;
     use WorkspaceCreator;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_member_index_endpoint()
     {
         $app = $this->createOctoolsApplication();
-        for ($i = 0; $i <= 3; $i++)
+        $nbMembers = rand(2, 10);
+
+        for ($i = 0; $i < $nbMembers; $i++)
         {
             $this->createOctoolsMember(['workspace_id' => $app->workspace->getKey()]);
         }
 
-        $this->assertDatabaseCount('members', 4);
+        $this->assertDatabaseCount('members', $nbMembers);
 
         $response = $this->actingAsApplication($app)->get(route('members.index'))->assertSuccessful();
-        $this->assertCount(4, $response->json()['data']);
+        $this->assertCount($nbMembers, $response->json()['data']);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_member_store_endpoint()
     {
         $app = $this->createOctoolsApplication();
         $this->assertDatabaseCount('members', 0);
 
         $response = $this->actingAsApplication($app)->post(route('members.store', [
-            'firstname' => 'Clément',
-            'lastname' => 'REPEL',
-            'email' => 'clement@web-id.fr',
-            'birthdate' => '25-06-2003',
-            'workspace_id' => $this->createOctoolsWorkspace()->getKey(),
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'email' => 'john@doe.fr',
+            'birthdate' => '25-06-1999',
+            'workspace_id' => $app->workspace->getKey(),
         ]));
 
         $response->assertStatus(200)->assertJson([
@@ -54,9 +52,7 @@ class MemberEndpointsTest extends TestCase
         $this->assertDatabaseCount('members', 1);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_member_show_endpoint()
     {
         $app = $this->createOctoolsApplication();
@@ -76,9 +72,7 @@ class MemberEndpointsTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_member_update_endpoint()
     {
         $app = $this->createOctoolsApplication();
@@ -87,24 +81,26 @@ class MemberEndpointsTest extends TestCase
         $this->actingAsApplication($app)
             ->put(
                 route('members.update', $member),
-                ['email' => 'clement@web-id.fr']
+                [
+                    'firstname' => 'John',
+                    'lastname' => 'Doe',
+                ]
             )
             ->assertStatus(200)
             ->assertJson([
                 'success' => 'Member updated with success',
             ]);
 
-        $this->assertNotEquals('clement@web-id.fr', $member->email);
+        $this->assertNotEquals('John', $member->firstname);
+        $this->assertNotEquals('Doe', $member->lastname);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_member_delete_endpoint()
     {
         Member::getEventDispatcher();
         $app = $this->createOctoolsApplication();
-        $member = $this->createOctoolsMember(['workspace_id' => $app->workspace->getKey()]);
+        $member = $this->createOctoolsMemberForWorkspace($app->workspace);
 
         $this->assertDatabaseCount('members', 1);
 
@@ -114,12 +110,6 @@ class MemberEndpointsTest extends TestCase
         $response->assertJson([
             'success' => 'Member deleted with success',
         ]);
-
-
-
-
-
-
 
         $this->assertDatabaseCount('members', 0);
     }

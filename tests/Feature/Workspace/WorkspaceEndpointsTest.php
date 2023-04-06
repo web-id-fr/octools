@@ -9,13 +9,10 @@ use Tests\TestCase;
 class WorkspaceEndpointsTest extends TestCase
 {
     use ApplicationCreator, WorkspaceCreator;
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_workspace_show_endpoint()
     {
-        $workspace = $this->createOctoolsWorkspace();
-        $app = $this->createOctoolsApplication(['workspace_id' => $workspace->getKey()]);
+        $app = $this->createOctoolsApplication();
 
         $this->actingAsApplication($app)
         ->get(route('workspaces.show'))

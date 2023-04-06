@@ -10,9 +10,7 @@ use Tests\TestCase;
 class OrganizationEndpointsTest extends TestCase
 {
     use ApplicationCreator;
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_organization_show_endpoint()
     {
         $app = $this->createOctoolsApplication();

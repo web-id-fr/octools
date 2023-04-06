@@ -14,44 +14,31 @@ use Tests\TestCase;
 class UserEndpointsTest extends TestCase
 {
     use ApplicationCreator, WorkspaceCreator, UserCreator, OrganizationCreator;
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_user_index_endpoint()
     {
+        $nbUsers = rand(2, 10);
         $organization = $this->createOctoolsOrganization();
-        $workspace = $this->createOctoolsWorkspace([
-            'organization_id' => $organization->getKey(),
-        ]);
-        $app = $this->createOctoolsApplication(['workspace_id' => $workspace->getKey()]);
+        $workspace = $this->createOctoolsWorkspaceForOrganization($organization);
+        $app = $this->createOctoolsApplicationForWorkspace($workspace);
 
-        for ($i = 0; $i <= 3; $i++) {
-            $this->createOctoolsUser([
-                'organization_id' => $organization->getKey()
-            ]);
+        for ($i = 0; $i < $nbUsers; $i++) {
+            $this->createOctoolsUserForOrganization($organization);
         }
 
-        $this->assertDatabaseCount('users', 4);
+        $this->assertDatabaseCount('users', $nbUsers);
 
         $response =  $this->actingAsApplication($app)->get(route('users.index'))->assertSuccessful();
-        $this->assertEquals(4, $response->getOriginalContent()->count());
+        $this->assertEquals($nbUsers, $response->getOriginalContent()->count());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_user_show_endpoint()
     {
         $organization = $this->createOctoolsOrganization();
-        $user = $this->createOctoolsUser([
-            'organization_id' => $organization->getKey()
-        ]);
-        $workspace = $this->createOctoolsWorkspace([
-            'organization_id' => $organization->getKey()
-        ]);
-        $app = $this->createOctoolsApplication([
-            'workspace_id' => $workspace->getKey()
-        ]);
+        $user = $this->createOctoolsUserForOrganization($organization);
+        $workspace = $this->createOctoolsWorkspaceForOrganization($organization);
+        $app = $this->createOctoolsApplicationForWorkspace($workspace);
 
         $this->actingAsApplication($app)->get(route('users.show', $user->getKey()))
             ->assertSuccessful()

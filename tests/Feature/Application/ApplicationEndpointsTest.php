@@ -10,9 +10,7 @@ use function PHPUnit\Framework\assertJson;
 class ApplicationEndpointsTest extends TestCase
 {
     use ApplicationCreator;
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_application_show_endpoint()
     {
         $app = $this->createOctoolsApplication();
@@ -29,9 +27,7 @@ class ApplicationEndpointsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_call_application_update_endpoint()
     {
         $app = $this->createOctoolsApplication(

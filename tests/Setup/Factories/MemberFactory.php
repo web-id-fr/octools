@@ -23,7 +23,7 @@ class MemberFactory extends Factory
             'email' => $this->faker->unique()->email(),
             'firstname' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
-            'birthdate' => $this->faker->date('d-m-Y'),
+            'birthdate' => $this->faker->date(),
             'workspace_id' => WorkspaceFactory::new(),
         ];
     }
