@@ -54,7 +54,7 @@ This package allows you to install the back-office which allows the management o
 
 ## Configuration
 
-You can configure the package, like the reference for your models in app/octools.php.
+You can configure the package, like the reference for your models in config/octools.php.
     
 ```php
     'models' => [
@@ -73,7 +73,7 @@ You can also edit the brand and menu sidebar of the back-office.
 ## API Usage
 
 You can now use the API to manage your users, teams and applications. You can refer to the API documentation at [Octools.io](https://app.octools.io/api/docs).
-API routes require an authentication token. You can generate a token by logging into your back office and going to the "Application" menu. You can then create a new application and a token will be attached to it.
+API routes requires an authentication token. You can generate a token by logging into your back office and going to the "Application" menu. You can then create a new application and a token will be attached to it.
 It is with this that we authenticate on the API.
 
 ```sh
