@@ -10,9 +10,11 @@ use App\ApiServices\Gryzzly\Entities\GryzzlyCredentials;
 use App\ApiServices\Gryzzly\Exceptions\GryzzlyIsNotConfigured;
 use App\ApiServices\Slack\Entities\SlackCredentials;
 use App\ApiServices\Slack\Exceptions\SlackIsNotConfigured;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * @property int $workspace_id
@@ -71,5 +73,14 @@ class WorkspaceService extends Model
             return new SlackCredentials($this->config['bot_token']);
         }
         throw new SlackIsNotConfigured();
+    }
+
+
+    protected function config(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Crypt::decrypt($value),
+            set: fn ($value) => Crypt::encrypt($value),
+        );
     }
 }
