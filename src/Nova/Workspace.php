@@ -54,7 +54,7 @@ class Workspace extends Resource
 
         $newFields = [];
 
-        foreach ($this->resource->services as $service) {
+        foreach ($this->resource->services() as $service) {
             $newFields[] = Heading::make($service->service)->onlyOnDetail()->hideFromIndex();
             foreach ($service->config as $key => $config) {
                 $newFields[] = Text::make($key, function () use ($service, $key) {

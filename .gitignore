@@ -2,8 +2,8 @@
 .idea/
 vendor/
 composer.lock
+.phpunit.cache
+phpunit.xml.bak
 .env
 .phpunit.result.cache
-.phpunit.cache/
-phpunit.xml.bak
 .php-cs-fixer.cache
