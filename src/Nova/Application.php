@@ -53,9 +53,6 @@ class Application extends Resource
             Text::make(__('Token'), 'token')
                 ->default(fn () => $token)
                 ->hideWhenUpdating(),
-
-            Hidden::make(__('API Token'), 'api_token')
-                ->default(fn () => hash('sha256', $token)),
         ];
     }
 
