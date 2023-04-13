@@ -73,8 +73,7 @@ return new class extends Migration
             'applications', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
-                $table->string('token');
-                $table->string('api_token');
+                $table->text('token');
                 $table->foreignId('workspace_id')->constrained()->onDelete('cascade');
             }
         );

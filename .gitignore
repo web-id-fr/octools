@@ -2,7 +2,10 @@
 .idea/
 vendor/
 composer.lock
-.env
 auth.json
-.phpunit.result.cache
 .phpunit.cache
+phpunit.xml.bak
+.env
+.phpunit.result.cache
+.php-cs-fixer.cache
+
