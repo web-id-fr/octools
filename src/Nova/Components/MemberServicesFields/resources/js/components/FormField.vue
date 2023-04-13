@@ -29,6 +29,7 @@ export default {
   props: ['resourceName', 'resourceId', 'field'],
 
   data() {
+      console.log(this.services);
       return {
           'response' : {},
           'services' : [],
