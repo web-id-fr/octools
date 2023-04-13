@@ -65,7 +65,7 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('member_id')->constrained()->cascadeOnDelete();
                 $table->string('service');
-                $table->text('config');
+                $table->string('identifier');
             }
         );
 

@@ -1,17 +1,17 @@
 <template>
     <DefaultField :field="field" :errors="errors" :show-help-text="showHelpText">
         <template #field>
-            <div v-for="(configs, service) in services">
-                <p class="text-xl text-gray-200">{{ service }}</p>
-                <div v-for="config in configs" class="mb-4">
+            <div v-for="(memberKey, serviceKey) in services">
+                <p class="text-xl text-gray-200">{{ ucfirst(serviceKey) }}</p>
+                <div class="mb-4">
                     <input
-                        :id="config"
+                        :id="serviceKey + '_identifier'"
                         type="text"
                         class="w-full mt-3 form-control form-input form-input-bordered"
                         :class="errorClasses"
-                        :placeholder="config"
-                        :value="getResponseValue(service, config)"
-                        @input="event => setResponseValue(service, config, event.target.value)"
+                        :placeholder="memberKey"
+                        :value="getResponseValue(serviceKey)"
+                        @input="event => setResponseValue(serviceKey, event.target.value)"
                     />
                 </div>
             </div>
@@ -21,6 +21,7 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import _ from 'lodash'
 
 export default {
   mixins: [FormField, HandlesValidationErrors],
@@ -35,16 +36,15 @@ export default {
   },
 
   methods: {
-      getResponseValue(service, config) {
-          this.setResponseValue(service, config, this.value?.[service]?.[config])
-          return this.value?.[service]?.[config] ?? ''
+      getResponseValue(service) {
+          this.setResponseValue(service, this.value?.[service])
+          return this.value?.[service] ?? ''
       },
-      setResponseValue(service, config, value) {
-          if (!this.response?.[service]) {
-              this.response[service] = {}
-          }
-
-          this.response[service][config] = value || null
+      setResponseValue(service, value) {
+          this.response[service] = value || null
+      },
+      ucfirst(str) {
+        return _.startCase(str);
       },
 
     /*

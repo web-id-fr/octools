@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int $member_id
  * @property string $service
- * @property array $config
+ * @property string $identifier
  * @property Member $member
  */
 class MemberService extends Model
@@ -28,16 +28,7 @@ class MemberService extends Model
     protected $fillable = [
         'member_id',
         'service',
-        'config',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string>
-     */
-    protected $casts = [
-        'config' => 'array',
+        'identifier',
     ];
 
     public function member(): BelongsTo
