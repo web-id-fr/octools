@@ -76,7 +76,13 @@ class MemberEndpointsTest extends TestCase
     public function can_call_member_update_endpoint()
     {
         $app = $this->createOctoolsApplication();
-        $member = $this->createOctoolsMember(['workspace_id' => $app->workspace->getKey()]);
+        $member = $this->createOctoolsMember(
+            [
+                'workspace_id' => $app->workspace->getKey(),
+                'firstname' => 'Dominique',
+                'lastname' => 'Dupont',
+            ]
+        );
 
         $this->actingAsApplication($app)
             ->put(
@@ -91,8 +97,10 @@ class MemberEndpointsTest extends TestCase
                 'success' => 'Member updated with success',
             ]);
 
-        $this->assertNotEquals('John', $member->firstname);
-        $this->assertNotEquals('Doe', $member->lastname);
+        $member->refresh();
+
+        $this->assertEquals('John', $member->firstname);
+        $this->assertEquals('Doe', $member->lastname);
     }
 
     /** @test */
