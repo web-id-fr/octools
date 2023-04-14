@@ -64,14 +64,16 @@ class Member extends Model
 
     public function scopeHavingServiceMemberKeyMatching(Builder $builder, OctoolsService $service, array $matches): void
     {
-        $builder->whereHas('services', fn ($query) => $query
+        $builder->whereHas(
+            'services',
+            fn ($query) => $query
             ->where('service', $service->name)
-            ->whereIn("config->{$service->memberKey}", $matches)
+            ->whereIn('identifier', $matches)
         );
     }
 
     public function getUsernameForService(OctoolsService $service): mixed
     {
-        return $this->services->firstWhere('service', $service->name)?->config[$service->memberKey] ?? null;
+        return $this->services->firstWhere('service', $service->name)?->identifier ?? null;
     }
 }

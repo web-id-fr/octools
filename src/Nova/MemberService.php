@@ -30,7 +30,7 @@ class MemberService extends Resource
      * @var string[]
      */
     public static $search = [
-        'id', 'service' ,'config',
+        'id', 'service', 'identifier',
     ];
 
     public function title(): string

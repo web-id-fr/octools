@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
+use Webid\Octools\Facades\Octools;
 use Webid\Octools\Nova\Components\MemberServicesFields\MemberServicesFields;
 
 class Member extends Resource
@@ -66,11 +67,15 @@ class Member extends Resource
 
         foreach ($resource->services as $service) {
             $newFields[] = Heading::make($service->service)->onlyOnDetail()->hideFromIndex();
-            foreach ($service->config as $key => $config) {
-                $newFields[] = Text::make($key, function () use ($service, $key) {
-                    return $service->config[$key];
-                })->onlyOnDetail()->hideFromIndex();
-            }
+
+            $octoolsService = Octools::getServiceByKey($service->service);
+
+            $newFields[] = Text::make(
+                $octoolsService->memberKey,
+                function () use ($service) {
+                    return $service->identifier;
+                }
+            )->onlyOnDetail()->hideFromIndex();
         }
 
         $fields[] = new Panel('Services', $newFields);

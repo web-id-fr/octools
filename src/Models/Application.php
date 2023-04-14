@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Webid\Octools\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Crypt;
 use Tests\Setup\Factories\ApplicationFactory;
 use Webid\Octools\OctoolsService;
 
@@ -38,6 +40,14 @@ class Application extends Model
 
     public function getWorkspaceService(OctoolsService $octoolsService): ?WorkspaceService
     {
-        return $this->workspace->services->first(fn (WorkspaceService $service ) => $service->service === $octoolsService->name);
+        return $this->workspace->services->first(fn (WorkspaceService $service) => $service->service === $octoolsService->name);
+    }
+
+    protected function token(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Crypt::decrypt($value) : null,
+            set: fn ($value) => Crypt::encrypt($value),
+        );
     }
 }

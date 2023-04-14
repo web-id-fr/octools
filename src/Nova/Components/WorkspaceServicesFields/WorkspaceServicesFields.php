@@ -40,7 +40,8 @@ class WorkspaceServicesFields extends Field
         $data = [];
 
         foreach (Octools::getServices() as $service) {
-            $data[$service->name] = $resource->{$service->name}?->config;
+            $serviceConfig = $resource->services->where('service', $service->name)->first()?->config;
+            $data[$service->name] = $serviceConfig;
         }
 
         $this->value = $data;
@@ -60,28 +61,19 @@ class WorkspaceServicesFields extends Field
         $response = json_decode($request[$requestAttribute], true);
 
         foreach ($response as $serviceName => $data) {
-            $configs = Octools::getServiceByKey($serviceName)->connectionConfig;
-
-            foreach ($configs as $config) {
-                if (is_null($data[$config]) && !is_null($model->$serviceName)) {
-                    $model->$serviceName->delete();
-                }
+            if (empty(array_filter($data, fn ($value) => $value !== null))) {
+                $model->services()->where('service', $serviceName)->delete();
+            } else {
+                $model->services()->updateOrCreate(
+                    [
+                        'service' => $serviceName,
+                        'workspace_id' => $model->getKey(),
+                    ],
+                    [
+                        'config' => $data,
+                    ]
+                );
             }
-
-            /** @var class-string<Model> $workspaceServiceModel */
-            $workspaceServiceModel = config('octools.models.workspace_service');
-
-            if (is_null($model->$serviceName)) {
-                $workspaceServiceModel::query()->insert([
-                    'workspace_id' => $model->getKey(),
-                    'service' => $serviceName,
-                    'config' => json_encode($data),
-                ]);
-            }
-
-            $workspaceServiceModel::query()
-                ->where([['service', $serviceName], ['workspace_id', $model->getKey()]])
-                ->update(['config' => json_encode($data)]);
 
             Event::dispatch("workspace_service_set:{$serviceName}", [
                 'member' => $model,
