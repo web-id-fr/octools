@@ -11,11 +11,6 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function indexApi(Application $application): bool
-    {
-        return true;
-    }
-
     public function showApi(Application $application, $user): bool
     {
         return $application->workspace->organization->is($user->organization);

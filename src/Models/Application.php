@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Crypt;
+use Tests\Setup\Factories\ApplicationFactory;
 use Webid\Octools\OctoolsService;
 
 /**
@@ -19,8 +20,6 @@ use Webid\Octools\OctoolsService;
  */
 class Application extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     /**

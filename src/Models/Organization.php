@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Organization extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

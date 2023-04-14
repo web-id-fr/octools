@@ -11,7 +11,6 @@ use App\ApiServices\Gryzzly\Exceptions\GryzzlyIsNotConfigured;
 use App\ApiServices\Slack\Entities\SlackCredentials;
 use App\ApiServices\Slack\Exceptions\SlackIsNotConfigured;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Crypt;
@@ -24,8 +23,6 @@ use Illuminate\Support\Facades\Crypt;
  */
 class WorkspaceService extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     /**

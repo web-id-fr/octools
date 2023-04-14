@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateOctoolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -74,6 +74,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('name');
                 $table->text('token');
+                $table->string('api_token');
                 $table->foreignId('workspace_id')->constrained()->onDelete('cascade');
             }
         );

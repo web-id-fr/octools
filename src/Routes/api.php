@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Webid\Octools\Http\Controllers\Api\ApplicationController;
 use Webid\Octools\Http\Controllers\Api\MemberController;
@@ -62,7 +62,6 @@ Route::name('organizations.')->group(function () {
 
 Route::name('users.')->prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])
-        ->can('indexApi', User::class)
         ->name('index');
 
     Route::post('/', [UserController::class, 'store'])

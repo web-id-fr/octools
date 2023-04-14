@@ -15,6 +15,11 @@
             "Webid\\Octools\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -28,8 +33,14 @@
             "url": "https://nova.laravel.com"
         }
     ],
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
+    },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
-        "friendsofphp/php-cs-fixer": "^3.15"
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.1",
+        "laravel/legacy-factories": "^1.0.4"
     }
 }
