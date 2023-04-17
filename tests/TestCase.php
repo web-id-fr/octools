@@ -83,9 +83,9 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     public function createTables()
     {
         include_once __DIR__ . '/Setup/Migrations/create_users_tables.php';
-        include_once __DIR__ . '/../database/migrations/create_octools_tables.php';
+        $octoolsTables = require(__DIR__ . '/../database/migrations/create_octools_tables.php.stub');
         (new CreateUsersTable())->up();
-        (new CreateOctoolsTable())->up();
+        $octoolsTables->up();
     }
 
     private function configModels()

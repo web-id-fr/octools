@@ -99,7 +99,7 @@ class OctoolsServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__ . "/../database/migrations/create_octools_tables.php" => $this->app->databasePath('migrations/'. Carbon::now()->format('Y_m_d_His', time())."_create_octools_tables.php"),
+            __DIR__ . "/../database/migrations/create_octools_tables.php.stub" => $this->app->databasePath('migrations/'. Carbon::now()->format('Y_m_d_His', time())."_create_octools_tables.php"),
         ], 'migrations');
 
         $this->publishes([
