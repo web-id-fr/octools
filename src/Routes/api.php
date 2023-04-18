@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Webid\Octools\Http\Controllers\Api\ApplicationController;
 use Webid\Octools\Http\Controllers\Api\MemberController;
