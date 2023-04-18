@@ -75,7 +75,7 @@ class OctoolsServiceProvider extends ServiceProvider
         Route::model('user', config('octools.models.user'));
 
         Route::group(config('octools.api_routes_group'), function () {
-            $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
+            $this->loadRoutesFrom(__DIR__ . '/Routes/api.php');
         });
     }
 
