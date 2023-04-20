@@ -30,6 +30,7 @@ class OctoolsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/octools.php', 'octools');
         $this->mergeConfigFrom(__DIR__ . '/../config/octools-auth-guards.php', 'auth.guards');
         $this->mergeConfigFrom(__DIR__ . '/../config/octools-auth-providers.php', 'auth.providers');
+        $this->mergeConfigFrom(__DIR__ . '/../config/openapi.php', 'openapi');
 
         $this->app->register(MemberFieldServiceProvider::class);
         $this->app->register(WorkspaceFieldServiceProvider::class);
@@ -109,6 +110,10 @@ class OctoolsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/lang' => $this->app->langPath('vendor/octools'),
         ], 'lang');
+
+        $this->publishes([
+            __DIR__ . '/../config/openapi.php' => $this->app->configPath('openapi.php'),
+        ], 'openapi');
     }
 
     private function overrideNovaConfigurations(): void
