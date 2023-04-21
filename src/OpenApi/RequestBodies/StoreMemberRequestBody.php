@@ -5,16 +5,16 @@ namespace Webid\Octools\OpenApi\RequestBodies;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\RequestBody;
 use Vyuldashev\LaravelOpenApi\Factories\RequestBodyFactory;
-use Webid\Octools\OpenApi\Schemas\UserCreateRequestSchema;
+use Webid\Octools\OpenApi\Schemas\MemberCreateRequestSchema;
 
-class StoreUserRequestBody extends RequestBodyFactory
+class StoreMemberRequestBody extends RequestBodyFactory
 {
     public function build(): RequestBody
     {
-        return RequestBody::create('UserCreate')
-            ->description('User data')
+        return RequestBody::create('MemberCreate')
+            ->description('Member data')
             ->content(
-                MediaType::json()->schema(UserCreateRequestSchema::ref())
+                MediaType::json()->schema(MemberCreateRequestSchema::ref())
             );
     }
 }

@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace Webid\Octools\Http\Controllers\Api;
 
+use App\Models\User;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Webid\Octools\OpenApi\RequestBodies\StoreUserRequestBody;
+use Webid\Octools\OpenApi\RequestBodies\UpdateUserRequestBody;
+use Webid\Octools\OpenApi\Responses\CreatedResponse;
+use Webid\Octools\OpenApi\Responses\ErrorNotFoundResponse;
+use Webid\Octools\OpenApi\Responses\ErrorUnauthenticatedResponse;
 use Webid\Octools\OpenApi\Responses\ErrorUnauthorizedResponse;
+use Webid\Octools\OpenApi\Responses\ErrorValidationResponse;
 use Webid\Octools\OpenApi\Responses\ListUsersResponse;
+use Webid\Octools\OpenApi\Responses\UpdatedResponse;
 use Webid\Octools\OpenApi\Responses\UserResponse;
 use Webid\Octools\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
@@ -29,7 +36,8 @@ class UserController
      */
     #[OpenApi\Operation(tags: ['User'])]
     #[OpenApi\Response(factory: ListUsersResponse::class)]
-    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 403)]
+    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
+    #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
     public function index(): AnonymousResourceCollection
     {
         $users = $this->userRepository->allUsersFromApplication(loggedApplication());
@@ -41,8 +49,10 @@ class UserController
      */
     #[OpenApi\Operation(tags: ['User'])]
     #[OpenApi\RequestBody(factory: StoreUserRequestBody::class)]
-    #[OpenApi\Response(factory: UserResponse::class)]
-    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 403)]
+    #[OpenApi\Response(factory: CreatedResponse::class, statusCode: 201)]
+    #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
+    #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
     public function store(StoreUserRequest $request): JsonResponse
     {
         /** @var array $data */
@@ -52,7 +62,7 @@ class UserController
 
         return response()->json([
             'success' => 'User created with success',
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -62,7 +72,9 @@ class UserController
      */
     #[OpenApi\Operation(tags: ['User'])]
     #[OpenApi\Response(factory: UserResponse::class)]
-    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 403)]
+    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
+    #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
+    #[OpenApi\Response(factory: ErrorNotFoundResponse::class, statusCode: 404)]
     public function show(Authenticatable $user): UserResource
     {
         return UserResource::make($user->load('organization'));
@@ -70,10 +82,16 @@ class UserController
 
     /**
      * Update user.
+     *
+     * @param User $user User ID
      */
-    #[OpenApi\Operation(tags: ['User'])]
-    #[OpenApi\Response(factory: UserResponse::class)]
-    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 403)]
+    #[OpenApi\Operation(tags: ['User'], method: 'PATCH')]
+    #[OpenApi\RequestBody(factory: UpdateUserRequestBody::class)]
+    #[OpenApi\Response(factory: UpdatedResponse::class, statusCode: 200)]
+    #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
+    #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
+    #[OpenApi\Response(factory: ErrorNotFoundResponse::class, statusCode: 404)]
     public function update(UpdateUserRequest $request, $user): JsonResponse
     {
         /** @var array $data */

@@ -4,15 +4,20 @@ namespace Webid\Octools\OpenApi\Responses;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
+use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Factories\ResponseFactory;
-use Webid\Octools\OpenApi\Schemas\UserResponseSchema;
+use Webid\Octools\OpenApi\Schemas\MemberResponseSchema;
 
-class UserResponse extends ResponseFactory
+class ListMembersResponse extends ResponseFactory
 {
     public function build(): Response
     {
         return Response::ok()->description('Successful response')->content(
-            MediaType::json()->schema(UserResponseSchema::ref())
+            MediaType::json()->schema(
+                Schema::object()->properties(
+                    Schema::array('data')->items(MemberResponseSchema::ref())
+                )
+            )
         );
     }
 }

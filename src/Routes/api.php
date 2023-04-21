@@ -24,7 +24,7 @@ Route::name('members.')->prefix('members')->group(function () {
         ->can('storeApi', Member::class)
         ->name('store');
 
-    Route::put('{member}', [MemberController::class, 'update'])
+    Route::patch('{member}', [MemberController::class, 'update'])
         ->can('updateApi,member')
         ->name('update');
 
@@ -48,7 +48,7 @@ Route::name('applications.')->group(function () {
         ->can('showApi', Application::class)
         ->name('show');
 
-    Route::put('/applications/{application}', [ApplicationController::class, 'update'])
+    Route::patch('/applications/{application}', [ApplicationController::class, 'update'])
         ->can('updateApi,application')
         ->name('update');
 });
@@ -69,4 +69,6 @@ Route::name('users.')->prefix('users')->group(function () {
     Route::get('{user}', [UserController::class, 'show'])
         ->can('showApi,user')
         ->name('show');
+
+    // @todo update route for User
 });

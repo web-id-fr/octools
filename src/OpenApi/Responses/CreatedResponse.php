@@ -5,20 +5,19 @@ namespace Webid\Octools\OpenApi\Responses;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
-use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
 use Vyuldashev\LaravelOpenApi\Factories\ResponseFactory;
 
-class ErrorUnauthorizedResponse extends ResponseFactory implements Reusable
+class CreatedResponse extends ResponseFactory
 {
     public function build(): Response
     {
-        return Response::unauthorized('ErrorUnauthorized')
-            ->description('Unauthorized error')
+        return Response::created()
+            ->description('Resource created response')
             ->content(
                 MediaType::json()->schema(Schema::object()->properties(
-                    Schema::string('message')
-                        ->example('This action is unauthorized.'),
+                    Schema::string('success')
+                        ->example('Resource created with success'),
                 ))
-            );
+        );
     }
 }

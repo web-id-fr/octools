@@ -8,16 +8,16 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
 use Vyuldashev\LaravelOpenApi\Factories\ResponseFactory;
 
-class ErrorUnauthorizedResponse extends ResponseFactory implements Reusable
+class ErrorNotFoundResponse extends ResponseFactory implements Reusable
 {
     public function build(): Response
     {
-        return Response::unauthorized('ErrorUnauthorized')
-            ->description('Unauthorized error')
+        return Response::notFound('ErrorNotFound')
+            ->description('Not found error')
             ->content(
                 MediaType::json()->schema(Schema::object()->properties(
                     Schema::string('message')
-                        ->example('This action is unauthorized.'),
+                        ->example('Resource not found.'),
                 ))
             );
     }

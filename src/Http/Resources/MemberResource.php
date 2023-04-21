@@ -25,7 +25,7 @@ class MemberResource extends JsonResource
             'firstname' => $this->resource->firstname,
             'lastname' => $this->resource->lastname,
             'email' => $this->resource->email,
-            'birthdate' => $this->resource->birthdate?->format('d-m-Y'),
+            'birthdate' => $this->resource->birthdate?->format('d-m-Y'), // @todo use RFC 3339, section 5.6 (Y-m-d) pattern instead
             'workspace' => WorkspaceResource::make($this->whenLoaded('workspace')),
             'services' => $this->when(
                 $this->resource->relationLoaded('services') && $this->resource->relationLoaded('workspace'),

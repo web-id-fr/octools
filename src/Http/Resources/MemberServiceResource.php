@@ -20,7 +20,7 @@ class MemberServiceResource extends JsonResource
     {
         return [
             'service' => $this->resource->service,
-            'config' => $this->resource->config,
+            'identifier' => $this->resource->identifier,
         ];
     }
 }
