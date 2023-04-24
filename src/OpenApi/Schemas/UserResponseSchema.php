@@ -24,7 +24,11 @@ class UserResponseSchema extends SchemaFactory implements Reusable
                 Schema::string('name')->example('demo'),
                 Schema::string('email')->format('email'),
                 Schema::boolean('isAdmin'),
-                OrganizationResponseSchema::ref('organization'),
+                Schema::object('organization')
+                    ->properties(
+                        Schema::integer('id')->minimum(1),
+                        Schema::string('name')->example('demo'),
+                    ),
             );
     }
 }

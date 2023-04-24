@@ -20,16 +20,22 @@ class ApplicationResponseSchema extends SchemaFactory implements Reusable
     {
         return Schema::object('ApplicationResponse')
             ->properties(
-                Schema::integer('id')->minimum(1),
-                Schema::string('name')->example('demo'),
-                Schema::string('token')
-                    ->minLength(128)
-                    ->maxLength(128)
-                    ->example(
-                        'C8e3yM2OabTabKFSJQKn20yz4ELWCNiUCbWNuUYZTehz1WMugx6C1jwGdHMO5yfO' .
-                        '8cltCqT1DidhvYCmsHEiltAzPvibxhCL28MALTfbOK94Oka40xRmlkZh85zoDtgU'
-                    ),
-                WorkspaceResponseSchema::ref('workspace'),
+                Schema::object('data')->properties(
+                    Schema::integer('id')->minimum(1),
+                    Schema::string('name')->example('demo'),
+                    Schema::string('token')
+                        ->minLength(128)
+                        ->maxLength(128)
+                        ->example(
+                            'C8e3yM2OabTabKFSJQKn20yz4ELWCNiUCbWNuUYZTehz1WMugx6C1jwGdHMO5yfO' .
+                            '8cltCqT1DidhvYCmsHEiltAzPvibxhCL28MALTfbOK94Oka40xRmlkZh85zoDtgU'
+                        ),
+                    Schema::object('workspace')
+                        ->properties(
+                            Schema::integer('id')->minimum(1),
+                            Schema::string('name')->example('demo'),
+                        ),
+                ),
             );
     }
 }

@@ -20,17 +20,23 @@ class MemberResponseSchema extends SchemaFactory implements Reusable
     {
         return Schema::object('MemberResponse')
             ->properties(
-                Schema::integer('id')->minimum(1),
-                Schema::string('firstname')->example('John'),
-                Schema::string('lastname')->example('Doe'),
-                Schema::string('email')->format('email'),
-                Schema::string('birthdate')->format('date'),
-                WorkspaceResponseSchema::ref('workspace'),
-                Schema::object('services')->example([
-                    'github' => 'johndoe',
-                    'gryzzly' => 'johndoe',
-                    'slack' => 'johndoe'
-                ]),
+                Schema::object('data')->properties(
+                    Schema::integer('id')->minimum(1),
+                    Schema::string('firstname')->example('John'),
+                    Schema::string('lastname')->example('Doe'),
+                    Schema::string('email')->format('email'),
+                    Schema::string('birthdate')->format(Schema::FORMAT_DATE),
+                    Schema::object('workspace')
+                        ->properties(
+                            Schema::integer('id')->minimum(1),
+                            Schema::string('name')->example('demo'),
+                        ),
+                    Schema::object('services')->example([
+                        'github' => 'johndoe',
+                        'gryzzly' => 'johndoe',
+                        'slack' => 'johndoe'
+                    ]),
+                ),
             );
     }
 }

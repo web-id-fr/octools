@@ -23,7 +23,7 @@ class MemberUpdateRequestSchema extends SchemaFactory implements Reusable
                 Schema::string('firstname')->example('demo'),
                 Schema::string('lastname')->example('demo'),
                 Schema::string('email')->format('email'),
-                Schema::string('birthdate')->format('date'),
+                Schema::string('birthdate')->format(Schema::FORMAT_DATE),
                 Schema::integer('workspace_id')->minimum(1)
             );
     }

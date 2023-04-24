@@ -20,10 +20,26 @@ class WorkspaceResponseSchema extends SchemaFactory implements Reusable
     {
         return Schema::object('WorkspaceResponse')
             ->properties(
-                Schema::integer('id')->minimum(1),
-                Schema::string('name')->example('demo'),
-                OrganizationResponseSchema::ref('organization'),
-                Schema::array('services')->items(WorkspaceServiceResponseSchema::ref()),
+                Schema::object('data')->properties(
+                    Schema::integer('id')->minimum(1),
+                    Schema::string('name')->example('demo'),
+                    Schema::object('organization')
+                        ->properties(
+                            Schema::integer('id')->minimum(1),
+                            Schema::string('name')->example('demo'),
+                        ),
+                    Schema::array('services')->items(WorkspaceServiceResponseSchema::ref()),
+                    Schema::array('members')->items(
+                        Schema::object()
+                            ->properties(
+                                Schema::integer('id')->minimum(1),
+                                Schema::string('firstname')->example('John'),
+                                Schema::string('lastname')->example('Doe'),
+                                Schema::string('email')->format('email'),
+                                Schema::string('birthdate')->format(Schema::FORMAT_DATE),
+                            ),
+                    ),
+                ),
             );
     }
 }

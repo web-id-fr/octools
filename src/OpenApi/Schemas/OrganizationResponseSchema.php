@@ -22,8 +22,20 @@ class OrganizationResponseSchema extends SchemaFactory implements Reusable
             ->properties(
                 Schema::integer('id')->minimum(1),
                 Schema::string('name')->example('demo'),
-                // @todo workspaces
-                // @todo admins
+                Schema::array('workspaces')->items(
+                    Schema::object()->properties(
+                        Schema::integer('id')->minimum(1),
+                        Schema::string('name')->example('demo'),
+                    )
+                ),
+                Schema::array('admins')->items(
+                    Schema::object()->properties(
+                        Schema::integer('id')->minimum(1),
+                        Schema::string('name')->example('demo'),
+                        Schema::string('email')->format('email'),
+                        Schema::boolean('isAdmin'),
+                    )
+                ),
             );
     }
 }
