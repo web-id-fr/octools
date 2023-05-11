@@ -87,23 +87,14 @@ return [
 
         'request_bodies' => [
             base_path('vendor/webid/octools/src/OpenApi/RequestBodies'),
-            base_path('vendor/webid/octools-connectors/github/OpenApi/RequestBodies'),
-            base_path('vendor/webid/octools-connectors/gryzzly/OpenApi/RequestBodies'),
-            base_path('vendor/webid/octools-connectors/slack/OpenApi/RequestBodies'),
         ],
 
         'responses' => [
             base_path('vendor/webid/octools/src/OpenApi/Responses'),
-            base_path('vendor/webid/octools-connectors/github/OpenApi/Responses'),
-            base_path('vendor/webid/octools-connectors/gryzzly/OpenApi/Responses'),
-            base_path('vendor/webid/octools-connectors/slack/OpenApi/Responses'),
         ],
 
         'schemas' => [
             base_path('vendor/webid/octools/src/OpenApi/Schemas'),
-            base_path('vendor/webid/octools-connectors/github/OpenApi/Schemas'),
-            base_path('vendor/webid/octools-connectors/gryzzly/OpenApi/Schemas'),
-            base_path('vendor/webid/octools-connectors/slack/OpenApi/Schemas'),
         ],
 
         'security_schemes' => [
