@@ -36,15 +36,6 @@ class WorkspaceService extends Model
         'config',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string>
-     */
-    protected $casts = [
-        'config' => 'array',
-    ];
-
     public function workspace(): BelongsTo
     {
         return $this->belongsTo(config('octools.models.workspace'));
@@ -72,12 +63,11 @@ class WorkspaceService extends Model
         throw new SlackIsNotConfigured();
     }
 
-
     protected function config(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Crypt::decrypt($value),
-            set: fn ($value) => Crypt::encrypt($value),
+            get: fn ($value) => json_decode(Crypt::decrypt($value)),
+            set: fn ($value) => Crypt::encrypt(json_encode($value)),
         );
     }
 }
