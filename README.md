@@ -20,7 +20,7 @@ This package allows you to install the back-office which allows the management o
 2. After installation, you must publish the necessary assets using the following command :
     
     ```php
-    php artisan vendor:publish --provider="Webid\Octools\OctoolsServiceProvider"
+    php artisan vendor:publish --provider="Octools\Client\OctoolsClientServiceProvider"
     ```
    
 3. Now, you need to run the migrations :
