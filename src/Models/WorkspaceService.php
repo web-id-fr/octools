@@ -66,7 +66,7 @@ class WorkspaceService extends Model
     protected function config(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => json_decode(Crypt::decrypt($value)),
+            get: fn ($value) => json_decode(Crypt::decrypt($value), true),
             set: fn ($value) => Crypt::encrypt(json_encode($value)),
         );
     }

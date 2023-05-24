@@ -2,8 +2,6 @@
 
 namespace Webid\Octools\Nova\Components\WorkspaceServicesFields;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Event;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
