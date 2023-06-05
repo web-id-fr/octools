@@ -23,7 +23,7 @@ class OrganizationController
      *
      * @throws AuthenticationException
      */
-    #[OpenApi\Operation(tags: ['Organization'])]
+    #[OpenApi\Operation(id: 'getOrganization', tags: ['Organization'])]
     #[OpenApi\Response(factory: OrganizationResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
     public function show(): OrganizationResource

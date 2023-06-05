@@ -31,7 +31,7 @@ class ApplicationController
      *
      * @throws AuthenticationException
      */
-    #[OpenApi\Operation(tags: ['Application'])]
+    #[OpenApi\Operation(id: 'getApplication', tags: ['Application'])]
     #[OpenApi\Response(factory: ApplicationResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -45,7 +45,7 @@ class ApplicationController
      *
      * @param Application $application Application ID
      */
-    #[OpenApi\Operation(tags: ['Application'])]
+    #[OpenApi\Operation(id: 'updateApplication', tags: ['Application'])]
     #[OpenApi\RequestBody(factory: UpdateApplicationRequestBody::class)]
     #[OpenApi\Response(factory: UpdatedResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]

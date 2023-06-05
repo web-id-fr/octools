@@ -18,7 +18,7 @@ class WorkspaceController
      *
      * @throws AuthenticationException
      */
-    #[OpenApi\Operation(tags: ['Workspace'])]
+    #[OpenApi\Operation(id: 'getWorkspace', tags: ['Workspace'])]
     #[OpenApi\Response(factory: WorkspaceResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
     public function show(): WorkspaceResource

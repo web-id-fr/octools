@@ -37,7 +37,7 @@ class MemberController
      *
      * @throws AuthenticationException
      */
-    #[OpenApi\Operation(tags: ['Member'])]
+    #[OpenApi\Operation(id: 'getMembers', tags: ['Member'])]
     #[OpenApi\Response(factory: ListMembersResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -51,7 +51,7 @@ class MemberController
     /**
      * Create new user.
      */
-    #[OpenApi\Operation(tags: ['Member'])]
+    #[OpenApi\Operation(id: 'createMember', tags: ['Member'])]
     #[OpenApi\RequestBody(factory: StoreMemberRequestBody::class)]
     #[OpenApi\Response(factory: CreatedResponse::class, statusCode: 201)]
     #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
@@ -73,7 +73,7 @@ class MemberController
      *
      * @param Member $member Member ID
      */
-    #[OpenApi\Operation(tags: ['Member'])]
+    #[OpenApi\Operation(id: 'getMember', tags: ['Member'])]
     #[OpenApi\Response(factory: MemberResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -88,7 +88,7 @@ class MemberController
      *
      * @param string $email Member email
      */
-    #[OpenApi\Operation(tags: ['Member'])]
+    #[OpenApi\Operation(id: 'getMemberByEmail', tags: ['Member'])]
     #[OpenApi\Response(factory: MemberResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -103,7 +103,7 @@ class MemberController
      *
      * @param Member $member Member ID
      */
-    #[OpenApi\Operation(tags: ['Member'], method: 'PATCH')]
+    #[OpenApi\Operation(id: 'updateMember', tags: ['Member'], method: 'PATCH')]
     #[OpenApi\RequestBody(factory: UpdateMemberRequestBody::class)]
     #[OpenApi\Response(factory: UpdatedResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
@@ -126,7 +126,7 @@ class MemberController
      *
      * @param Member $member Member ID
      */
-    #[OpenApi\Operation(tags: ['Member'])]
+    #[OpenApi\Operation(id: 'deleteMember', tags: ['Member'])]
     #[OpenApi\Response(factory: DeletedResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]

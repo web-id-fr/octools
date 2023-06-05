@@ -34,7 +34,7 @@ class UserController
     /**
      * Get user list.
      */
-    #[OpenApi\Operation(tags: ['User'])]
+    #[OpenApi\Operation(id: 'getUsers', tags: ['User'])]
     #[OpenApi\Response(factory: ListUsersResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -47,7 +47,7 @@ class UserController
     /**
      * Create new user.
      */
-    #[OpenApi\Operation(tags: ['User'])]
+    #[OpenApi\Operation(id: 'createUser', tags: ['User'])]
     #[OpenApi\RequestBody(factory: StoreUserRequestBody::class)]
     #[OpenApi\Response(factory: CreatedResponse::class, statusCode: 201)]
     #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
@@ -70,7 +70,7 @@ class UserController
      *
      * @param Authenticatable $user User ID
      */
-    #[OpenApi\Operation(tags: ['User'])]
+    #[OpenApi\Operation(id: 'getUser', tags: ['User'])]
     #[OpenApi\Response(factory: UserResponse::class)]
     #[OpenApi\Response(factory: ErrorUnauthorizedResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ErrorUnauthenticatedResponse::class, statusCode: 403)]
@@ -85,7 +85,7 @@ class UserController
      *
      * @param User $user User ID
      */
-    #[OpenApi\Operation(tags: ['User'], method: 'PATCH')]
+    #[OpenApi\Operation(id: 'updateUser', tags: ['User'], method: 'PATCH')]
     #[OpenApi\RequestBody(factory: UpdateUserRequestBody::class)]
     #[OpenApi\Response(factory: UpdatedResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
